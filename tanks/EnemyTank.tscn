@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://tanks/Tank.tscn" type="PackedScene" id=1]
 [ext_resource path="res://tanks/EnemyTank.gd" type="Script" id=2]
@@ -9,15 +9,22 @@
 custom_solver_bias = 0.0
 extents = Vector2( 40, 36 )
 
+[sub_resource type="CircleShape2D" id=2]
+
+custom_solver_bias = 0.0
+radius = 340.0
+
 [node name="EnemyTank" index="0" instance=ExtResource( 1 )]
 
+collision_layer = 4
+collision_mask = 3
 script = ExtResource( 2 )
 _sections_unfolded = [ "Collision", "Material", "Pause", "Pickable", "Transform", "Visibility", "Z Index", "collision" ]
-Bullet = null
-speed = null
-rotation_speed = null
-gun_cooldown = null
-health = null
+speed = 150
+gun_cooldown = 0.5
+health = 100
+turret_speed = 1.0
+detection_radius = 400.0
 
 [node name="Body" parent="." index="0"]
 
@@ -37,5 +44,27 @@ offset = Vector2( 20, 0 )
 region_enabled = true
 region_rect = Rect2( 371, 14, 60, 24 )
 _sections_unfolded = [ "Offset", "Region" ]
+
+[node name="DetectRadius" type="Area2D" parent="." index="4"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+collision_layer = 4
+collision_mask = 2
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Audio Bus", "Collision", "Material", "Pause", "Pickable", "Transform", "Visibility", "Z Index" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectRadius" index="0"]
+
+shape = SubResource( 2 )
+_sections_unfolded = [ "Material", "Pause", "Transform", "Visibility", "Z Index" ]
+
+[connection signal="body_entered" from="DetectRadius" to="." method="_on_DetectRadius_body_entered"]
+
+[connection signal="body_exited" from="DetectRadius" to="." method="_on_DetectRadius_body_exited"]
 
 

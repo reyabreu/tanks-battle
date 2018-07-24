@@ -10,6 +10,7 @@ func start(_position, _direction):
 	position = _position
 	rotation = _direction.angle()
 	$Lifetime.wait_time = lifetime
+	$Lifetime.start()
 	velocity = _direction * speed
 
 func _process(delta):

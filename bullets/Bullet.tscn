@@ -2,19 +2,22 @@
 
 [ext_resource path="res://bullets/Bullet.gd" type="Script" id=1]
 
-[node name="Bullet" type="Area2D" index="0"]
+[node name="Bullet" type="Area2D"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
+collision_layer = 8
+collision_mask = 5
 audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 1 )
-speed = null
-damage = null
-lifetime = null
+_sections_unfolded = [ "Audio Bus", "Collision", "Material", "Pause", "Pickable", "Transform", "Visibility", "Z Index" ]
+speed = 100
+damage = 10
+lifetime = 2.0
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
@@ -26,9 +29,9 @@ _sections_unfolded = [ "Material", "Pause", "Transform", "Visibility", "Z Index"
 
 [node name="Lifetime" type="Timer" parent="." index="2"]
 
-process_mode = 1
+process_mode = 0
 wait_time = 1.0
-one_shot = false
+one_shot = true
 autostart = false
 
 [connection signal="body_entered" from="." to="." method="_on_Bullet_body_entered"]

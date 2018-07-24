@@ -8,6 +8,8 @@ export (float) var detection_radius
 var target = null
 
 func _ready():
+	# this is to allow individual tanks to have their own collision shape radius
+	$DetectRadius/CollisionShape2D.shape = CircleShape2D.new()
 	$DetectRadius/CollisionShape2D.shape.radius = detection_radius
 
 func control(delta):
@@ -22,9 +24,12 @@ func control(delta):
 func _process(delta):
 	if target:
 		var target_direction = (target.global_position - global_position).normalized()
-		# we want teh rotation in global coordinates, not relative to parent
+		# we want the rotation in global coordinates, not relative to parent
 		var current_direction = Vector2(1, 0).rotated($Turret.global_rotation)
 		$Turret.global_rotation = current_direction.linear_interpolate(target_direction, turret_speed * delta).angle()
+		if target_direction.dot(current_direction) > 0.9:
+			print("enemy shoots bullet")
+			shoot()
 
 func _on_DetectRadius_body_entered(body):
 		target = body

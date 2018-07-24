@@ -2,7 +2,7 @@
 
 [ext_resource path="res://tanks/Tank.gd" type="Script" id=1]
 
-[node name="Tank" type="KinematicBody2D" index="0"]
+[node name="Tank" type="KinematicBody2D"]
 
 input_pickable = false
 collision_layer = 1
@@ -25,9 +25,9 @@ health = null
 
 [node name="GunTimer" type="Timer" parent="." index="3"]
 
-process_mode = 1
+process_mode = 0
 wait_time = 1.0
-one_shot = false
+one_shot = true
 autostart = false
 
 [connection signal="timeout" from="GunTimer" to="." method="_on_GunTimer_timeout"]

@@ -18,15 +18,14 @@ func shoot():
 	if can_shoot:
 		can_shoot = false
 		$GunTimer.start()
-		var bullet_direction = Vector2(1, 0).rotated($Turret.global_rotation)
-		emit_signal('shoot', Bullet, $Turret/Muzzle.global_position, bullet_direction) 
+		var turret_direction = Vector2(1, 0).rotated($Turret.global_rotation)
+		emit_signal('shoot', Bullet, $Turret/Muzzle.global_position, turret_direction) 
 
 func _ready():
 	$GunTimer.wait_time = gun_cooldown
 	
 func control(delta):
-	if Input.is_action_pressed('click'):
-		shoot()
+	pass
 	
 func _physics_process(delta):
 	if not is_alive:
@@ -35,4 +34,4 @@ func _physics_process(delta):
 	move_and_slide(velocity)
 
 func _on_GunTimer_timeout():
-	can_
+	can_shoot = true

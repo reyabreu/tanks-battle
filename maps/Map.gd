@@ -14,5 +14,5 @@ func set_camera_limits():
 	
 func _on_Tank_shoot(bullet, _position, _direction):
 	var new_bullet = bullet.instance()
-	new_bullet.start(_position, _direction)
 	add_child(new_bullet)
+	new_bullet.start(_position, _direction)	
